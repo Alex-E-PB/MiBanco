@@ -1,5 +1,7 @@
 package org.example.dominio;
 
+import java.util.Date;
+
 public class Director extends Manager {
     private double presupuesto;
     private double presupuestoDisponible;
@@ -11,13 +13,16 @@ public class Director extends Manager {
         this.presupuestoDisponible = 0.0;
     }
 
-    /*// Constructor con parámetros
-    public Director(int id, String nombre, String cedula, double salario,
-                    String departamento, double presupuesto) {
-        super(id, nombre, cedula, salario, departamento);
+    // Constructor con parámetros
+    public Director(int id, String nombre, String apellido, String correo,
+                    Genero genero, double salario, String puesto,
+                    Date fechaContratacion, String depNombre, double presupuesto, double presupuestoDisponible) {
+        super();
+        setPresupuesto(presupuesto);
+        setPresupuestoDisponible(presupuestoDisponible);
         this.presupuesto = presupuesto;
         this.presupuestoDisponible = presupuesto;
-    }*/
+    }
 
     // metodo aprobarGasto(double gasto)
     public boolean aprobarGasto(double gasto) {

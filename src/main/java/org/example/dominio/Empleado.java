@@ -1,6 +1,7 @@
 package org.example.dominio;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Empleado extends Cliente {
     private int empleadoId;
@@ -91,5 +92,13 @@ public class Empleado extends Cliente {
                 ", Fecha Contratación=" + fechaContratacion +
                 ", Bono Anual=$" + String.format("%.2f", calcularBonoAnual()) +
                 "]";
+    }
+
+    @Override
+    public int hashCode(){
+        int hash=1;
+        hash=7*hash+ Objects.hashCode(this.getNombre());
+        hash=7*hash+ Objects.hashCode(this.getApellido());
+        return hash;
     }
 }

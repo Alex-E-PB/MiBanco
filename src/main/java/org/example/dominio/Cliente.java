@@ -123,6 +123,10 @@ public class Cliente {
 
 
     // Cliente- cuenta
+
+    /*public Cliente(){
+        this(1,"alex","piedra","alex@gma.com",null);
+    }*/
     private Cuenta[] cuentas = new Cuenta[5];
     private int numCuentas = 0;
 
