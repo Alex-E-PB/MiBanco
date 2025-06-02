@@ -10,7 +10,11 @@ public class CuentaCorriente extends Cuenta {
 
     public CuentaCorriente(double balance, double sobregiro) {
         super(balance);
-        this.sobregiro = Math.max(sobregiro, 0);
+        if (sobregiro >= 0) {
+            this.sobregiro = sobregiro;
+        } else {
+            this.sobregiro = 0.0;
+        }
     }
 
     public double getSobregiro() {
@@ -25,60 +29,57 @@ public class CuentaCorriente extends Cuenta {
         }
     }
 
-
-
-    // Método sobregiro disponible
     public double consultarSobregiro() {
-        return Math.max(0, sobregiro);
-    }
-    double sobregiroinicial=sobregiro;
-
-
-    @Override
-    public void retiro(double monto) {
-        if (monto <= balance + sobregiro) {
-            balance -= monto;
-            if (balance < 0) {
-                double sobregiroinicial=sobregiro;
-
-                sobregiro += balance;
-                balance = 0;
-                double sobregirorestante=sobregiroinicial-sobregiro;
-                sobregiro=-sobregirorestante;
-            }
-            System.out.println("Retiro exitoso. Saldo actual: " + balance + ". Sobregiro disponible: " + consultarSobregiro());
+        if (sobregiro >= 0) {
+            return sobregiro;
         } else {
-            System.out.println("Fondos insuficientes incluso con sobregiro.");
+            return 0.0;
         }
     }
 
     @Override
-    public void deposito(double monto) {
+    public boolean retiro(double monto) {
+        if (monto > 0 && monto <= balance + sobregiro) {
+            balance -= monto;
 
+            if (balance < 0) {
+                double sobregiroInicial = sobregiro;
+                sobregiro += balance; // balance es negativo
+                balance = 0;
+                double sobregiroRestante = sobregiroInicial - sobregiro;
+                sobregiro = -sobregiroRestante;
+            }
+
+            System.out.println("Retiro exitoso. Saldo actual: " + balance + ". Sobregiro disponible: " + consultarSobregiro());
+            return true;
+        } else {
+            System.out.println("Fondos insuficientes incluso con sobregiro.");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deposito(double monto) {
         if (monto > 0) {
-
             if (sobregiro < 0) {
-                double cubrirSobregiro = Math.min(-sobregiro, monto);
+                double cubrirSobregiro = monto;
+                if (cubrirSobregiro > -sobregiro) {
+                    cubrirSobregiro = -sobregiro;
+                }
                 sobregiro += cubrirSobregiro;
                 monto -= cubrirSobregiro;
             }
 
-            // Ahora, lo que queda del depósito se va al balance
             balance += monto;
 
-
             System.out.println("Depósito exitoso. Saldo actual: " + balance + ". Sobregiro disponible: " + consultarSobregiro());
-
-
+            return true;
         } else {
             System.out.println("El monto debe ser mayor a 0.");
+            return false;
         }
-
-
     }
 
-
-    // Sobrescritura del método toString
     @Override
     public String toString() {
         return "Cuenta Corriente [Saldo actual: " + balance +
@@ -86,3 +87,4 @@ public class CuentaCorriente extends Cuenta {
                 ", Total disponible: " + (balance + sobregiro) + "]";
     }
 }
+

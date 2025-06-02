@@ -10,6 +10,9 @@ public class Cliente {
     private Date fecha;
     private Genero genero;
 
+    private Cuenta[] cuentas = new Cuenta[5];
+    private int numCuentas = 0;
+
     public Cliente() {
         this.clienteId = 1;
         this.nombre = "sin nombre";
@@ -121,24 +124,36 @@ public class Cliente {
         this.genero = genero;
     }
 
+    // Método para agregar cuentas
+    public void agregarCuenta(Cuenta cuenta) {
+        if (cuenta == null) {
+            System.out.println("No se puede agregar una cuenta nula.");
+            return;
+        }
 
-    // Cliente- cuenta
+        if (numCuentas == cuentas.length) {
+            Cuenta[] nuevaLista = new Cuenta[cuentas.length + 5];
+            for (int i = 0; i < cuentas.length; i++) {
+                nuevaLista[i] = cuentas[i];
+            }
+            cuentas = nuevaLista;
+        }
 
-    /*public Cliente(){
-        this(1,"alex","piedra","alex@gma.com",null);
-    }*/
-    private Cuenta[] cuentas = new Cuenta[5];
-    private int numCuentas = 0;
+        cuentas[numCuentas++] = cuenta;
+        System.out.println("Cuenta agregada correctamente.");
+    }
 
-    public void nuevoCuenta(double saldo) {
+    public void nuevaTarjetaCredito(double cupo) {
         if (numCuentas == cuentas.length) {
             Cuenta[] nuevaLista = new Cuenta[cuentas.length + 5];
             System.arraycopy(cuentas, 0, nuevaLista, 0, cuentas.length);
             cuentas = nuevaLista;
         }
-        cuentas[numCuentas++] = new Cuenta(saldo);
-        System.out.println("Cuenta creada con saldo: " + saldo);
+        cuentas[numCuentas++] = new TarjetaCredito(cupo);
+        System.out.println("Tarjeta de crédito creada con cupo: " + cupo);
     }
+
+
 
     public String consultarCuentas() {
         if (numCuentas == 0) return "No hay cuentas";
@@ -179,10 +194,6 @@ public class Cliente {
         return null;
     }
 
-
-
-
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -206,6 +217,3 @@ public class Cliente {
         return sb.toString();
     }
 }
-
-
-

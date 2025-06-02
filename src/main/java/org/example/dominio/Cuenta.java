@@ -1,6 +1,6 @@
 package org.example.dominio;
 
-public class Cuenta {
+public abstract class Cuenta {
     protected double balance;
 
     public Cuenta() {
@@ -19,26 +19,15 @@ public class Cuenta {
         this.balance = balance;
     }
 
-    public void deposito(double monto) {
-        if (monto > 0) {
-            this.balance += monto;
-        } else {
-            System.out.println("El monto debe ser mayor a 0.");
-        }
-    }
-
-    public void retiro(double monto) {
-        if (monto > 0 && monto <= balance) {
-            this.balance -= monto;
-        } else {
-            System.out.println("Fondos insuficientes o monto inválido.");
-        }
-    }
+    // Métodos abstractos que deben devolver boolean
+    public abstract boolean deposito(double monto);
+    public abstract boolean retiro(double monto);
 
     @Override
     public String toString() {
         return "Cuenta [Balance: " + balance + "]";
     }
 }
+
 
 

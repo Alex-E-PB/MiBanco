@@ -25,28 +25,32 @@ public class CuentaAhorro extends Cuenta {
     }
 
     public void calculoInteres() {
-        double interesCalculado = balance * (tasaInteres/100);
+        double interesCalculado = balance * (tasaInteres / 100);
         System.out.println("Balance actual: " + balance);
         System.out.println("Interés calculado (con tasa de " + tasaInteres + "%): " + interesCalculado);
-        System.out.println("Deacuerdo al Balance actual al finalizar el mes su balance sera de: " + (balance+interesCalculado));
+        System.out.println("De acuerdo al Balance actual, al finalizar el mes su balance será de: " + (balance + interesCalculado));
         System.out.println("Interés acumulado actual: " + montoInteres);
     }
 
     @Override
-    public void retiro(double monto) {
-        if (monto <= balance) {
-            super.retiro(monto);
+    public boolean retiro(double monto) {
+        if (monto > 0 && monto <= balance) {
+            balance -= monto;
+            return true;
         } else {
             System.out.println("No puede retirar más de su saldo actual.");
+            return false;
         }
     }
 
     @Override
-    public void deposito(double monto) {
+    public boolean deposito(double monto) {
         if (monto > 0) {
-            super.deposito(monto);
+            balance += monto;
+            return true;
         } else {
             System.out.println("El monto debe ser mayor a 0.");
+            return false;
         }
     }
 
