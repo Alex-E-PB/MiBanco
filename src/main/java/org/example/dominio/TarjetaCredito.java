@@ -1,10 +1,10 @@
 package org.example.dominio;
 
 public class TarjetaCredito extends Cuenta {
-    private double cupo; // Límite máximo que puede gastar
+    private double cupo;
 
     public TarjetaCredito() {
-        super(0); // Las tarjetas no comienzan con saldo, sino con cupo
+        super(0);
         this.cupo = 1000.0;
     }
 

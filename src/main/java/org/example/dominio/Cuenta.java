@@ -19,7 +19,6 @@ public abstract class Cuenta {
         this.balance = balance;
     }
 
-    // Métodos abstractos que deben devolver boolean
     public abstract boolean deposito(double monto);
     public abstract boolean retiro(double monto);
 
